@@ -1,5 +1,5 @@
 package es.uam.esalud.sleepapp.logica
-
+//
 fun duracionEnMinutos(inicio: Hora, fin: Hora): Int {
     val minutosInicio = inicio.desdeMedianoche()
     val minutosFin = fin.desdeMedianoche()
