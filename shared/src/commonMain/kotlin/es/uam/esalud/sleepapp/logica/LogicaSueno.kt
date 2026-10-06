@@ -1,11 +1,30 @@
 package es.uam.esalud.sleepapp.logica
-//
-fun duracionEnMinutos(inicio: Hora, fin: Hora): Int {
-    val minutosInicio = inicio.desdeMedianoche()
-    val minutosFin = fin.desdeMedianoche()
 
-    return if (minutosFin >= minutosInicio) {minutosFin-minutosInicio} // sueño empieza tras 00:00
-        else {1440 - minutosInicio + minutosFin}  // sueño empieza en 23:59 o antes
+/**
+ * SESIÓN 1 - EJERCICIOS GUIADOS POR TESTS
+ *
+ * Implementad las dos funciones hasta que pasen todos los tests de
+ * commonTest/.../LogicaSuenoTest.kt
+ *
+ * Para ejecutarlos: botón derecho sobre el fichero de tests > Run.
+ * No hace falta emulador: son Kotlin puro.
+ */
+
+/**
+ * Duración del sueño en minutos.
+ *
+ * Si [fin] es anterior o igual a [inicio] se entiende que se ha cruzado la
+ * medianoche (por ejemplo: acostarse a las 23:30 y levantarse a las 07:15).
+ */
+fun duracionEnMinutos(inicio: Hora, fin: Hora): Int {
+    val inicioMinutos = inicio.desdeMedianoche()
+    val finMinutos = fin.desdeMedianoche()
+
+    return if (finMinutos > inicioMinutos) {
+        finMinutos - inicioMinutos
+    } else {
+        (24 * 60 - inicioMinutos) + finMinutos
+    }
 }
 
 /**
@@ -14,8 +33,5 @@ fun duracionEnMinutos(inicio: Hora, fin: Hora): Int {
  * @throws IllegalArgumentException si [minutosEnCama] no es positivo.
  */
 fun eficiencia(minutosDormido: Int, minutosEnCama: Int): Double {
-    // El tiempo en cama debe de ser mayor que 1.
-    require(minutosEnCama>0) {"Inválido. Usted debe de estar en cama más de 0 minutos"}
-    // Devolvemos el ratio de tiempo dormido. Ponemos minutos dormido en decimal pa que salga bien
-    return (minutosDormido.toDouble() / minutosEnCama) * 100.0
+    TODO("Ejercicio 2")
 }

@@ -1,20 +1,34 @@
 package es.uam.esalud.sleepapp.ui
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import es.uam.esalud.sleepapp.SuenoViewModel
 import es.uam.esalud.sleepapp.audio.GrabadorAudio
+import es.uam.esalud.sleepapp.horaActual
+import es.uam.esalud.sleepapp.logica.Hora
 import es.uam.esalud.sleepapp.nombrePlataforma
 
+/**
+ * SESIÓN 1 - PANTALLA PRINCIPAL
+ *
+ * Los TODO numerados son vuestros. El resto está resuelto.
+ */
 @Composable
-fun MainScreen(grabador: GrabadorAudio) {
+fun MainScreen(
+    grabador: GrabadorAudio,
+    viewModel: SuenoViewModel
+) {
 
     // `remember` + `mutableStateOf` = una variable que, al cambiar, hace que
     // Compose vuelva a dibujar lo que dependa de ella.
     var grabando by remember { mutableStateOf(false) }
     var ultimaRuta by remember { mutableStateOf<String?>(null) }
+    var horaInicio by remember { mutableStateOf(Hora(0, 0)) }
+    val registros by viewModel.registros.collectAsState()
 
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp),
@@ -44,42 +58,35 @@ fun MainScreen(grabador: GrabadorAudio) {
 
             Button(
                 onClick = {
-                    ultimaRuta = grabador.iniciar()
-                    grabando = true
-                    // TODO (1): llamar a grabador.iniciar(), guardar la ruta que
-                    //           devuelve en ultimaRuta y actualizar `grabando`.
+                    ultimaRuta=grabador.iniciar()
+                    horaInicio = horaActual()
+                    grabando=true
                 },
-                // TODO (2): ¿cuándo debe estar activo este botón?
-                //           Pista: no tiene sentido iniciar dos veces seguidas.
                 enabled =! grabando
             ) {
                 Text("Iniciar grabación")
             }
-
             Button(
                 onClick = {
                     grabador.detener()
-                    grabando = false
+                    grabando=false
+                    viewModel.guardar(
+                        inicio = horaInicio,
+                        fin = horaActual(),
+                        rutaAudio = ultimaRuta
+                    )
                 },
                 enabled = grabando
-            ) {
+            ){
                 Text("Detener grabación")
             }
-
-            // TODO (3): añadid aquí el botón de detener, simétrico al anterior.
-            //           Debe llamar a grabador.detener() y dejar `grabando` a false.
         }
 
         Spacer(Modifier.height(32.dp))
 
         val mensaje = if (grabando) "Grabando..." else "En reposo"
-        Text(text = mensaje, style = MaterialTheme.typography.bodyLarge)
+        Text(text = mensaje)
 
-
-        // TODO (4): mostrad un texto distinto según el valor de `grabando`
-        //           ("Grabando..." o "En reposo"), y debajo la última ruta
-        //           grabada si existe.
-        //           Pista: en Kotlin, `if` devuelve un valor:
-        //               val mensaje = if (grabando) "A" else "B"
+        ListaRegistros(registros)
     }
 }
