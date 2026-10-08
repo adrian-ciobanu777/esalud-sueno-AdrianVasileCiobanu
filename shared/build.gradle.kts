@@ -50,6 +50,7 @@ kotlin {
             implementation(libs.androidx.room.runtime)
         }
         commonMain.dependencies {
+            implementation(libs.jetbrains.navigation.compose)
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)

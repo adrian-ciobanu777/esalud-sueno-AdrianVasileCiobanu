@@ -20,7 +20,8 @@ import es.uam.esalud.sleepapp.nombrePlataforma
 @Composable
 fun MainScreen(
     grabador: GrabadorAudio,
-    viewModel: SuenoViewModel
+    viewModel: SuenoViewModel,
+    onRegistroClick: (Long) -> Unit
 ) {
 
     // `remember` + `mutableStateOf` = una variable que, al cambiar, hace que
@@ -87,6 +88,6 @@ fun MainScreen(
         val mensaje = if (grabando) "Grabando..." else "En reposo"
         Text(text = mensaje)
 
-        ListaRegistros(registros)
+        ListaRegistros(registros, onRegistroClick = onRegistroClick)
     }
 }

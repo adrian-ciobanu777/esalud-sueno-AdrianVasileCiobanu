@@ -1,5 +1,6 @@
 [versions]
-agp = "9.3.2"
+navigation = "2.10.0-beta01"
+agp = "9.4.1"
 android-compileSdk = "36"
 android-minSdk = "24"
 android-targetSdk = "36"
@@ -20,6 +21,7 @@ ksp = "2.3.10"
 kotlinxSerialization = "1.11.0"
 
 [libraries]
+jetbrains-navigation-compose = { module = "org.jetbrains.android.navigation:navigation-compose", version.ref = "navigation" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { module = "junit:junit", version.ref = "junit" }
