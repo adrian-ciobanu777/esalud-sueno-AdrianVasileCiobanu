@@ -60,6 +60,15 @@ fun DialogoValoracion(
                 // sueño, con el mismo patrón que los de arriba.
                 // El rango va de 1 a 5, así que valueRange = 1f..5f y steps = 3.
                 // La variable de estado que hay que actualizar se llama `calidad`.
+                Text("Calidad percibida del sueño: $calidad / 5")
+                Slider(
+                    value = calidad.toFloat(),
+                    onValueChange = { nuevo -> calidad = nuevo.toInt() },
+                    valueRange = 1f..5f,
+                    steps = 3
+                )
+
+
             }
         },
         confirmButton = {

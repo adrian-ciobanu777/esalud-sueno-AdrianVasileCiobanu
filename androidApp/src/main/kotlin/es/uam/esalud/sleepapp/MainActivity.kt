@@ -34,6 +34,8 @@ class MainActivity : ComponentActivity() {
         // Pista: peticionPermiso.launch(Manifest.permission.XXXXX)
         // El nombre del permiso es el mismo que habéis declarado en el
         // AndroidManifest.xml en el ejercicio 1.
+        peticionPermiso.launch(Manifest.permission.RECORD_AUDIO)
+
 
         // --- Dependencias de la aplicación ----------------------------------
         val repositorio = crearRepositorioRoom(applicationContext)

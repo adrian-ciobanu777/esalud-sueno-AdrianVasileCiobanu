@@ -13,9 +13,9 @@ import es.uam.esalud.sleepapp.logica.Hora
 import es.uam.esalud.sleepapp.nombrePlataforma
 
 /**
- * SESIÓN 1 - PANTALLA PRINCIPAL
+ * SESIÓN 3 - PANTALLA PRINCIPAL
  *
- * Los TODO numerados son vuestros. El resto está resuelto.
+ * Añadido: horaFin, mostrarDialogo, y el diálogo de valoración al detener.
  */
 @Composable
 fun MainScreen(
@@ -24,17 +24,18 @@ fun MainScreen(
     onRegistroClick: (Long) -> Unit
 ) {
 
-    // `remember` + `mutableStateOf` = una variable que, al cambiar, hace que
-    // Compose vuelva a dibujar lo que dependa de ella.
     var grabando by remember { mutableStateOf(false) }
     var ultimaRuta by remember { mutableStateOf<String?>(null) }
     var horaInicio by remember { mutableStateOf(Hora(0, 0)) }
+    var horaFin by remember { mutableStateOf(Hora(0, 0)) }
+    var mostrarDialogo by remember { mutableStateOf(false) }
+
     val registros by viewModel.registros.collectAsState()
 
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Top
     ) {
 
         Text(
@@ -59,26 +60,24 @@ fun MainScreen(
 
             Button(
                 onClick = {
-                    ultimaRuta=grabador.iniciar()
+                    ultimaRuta = grabador.iniciar()
                     horaInicio = horaActual()
-                    grabando=true
+                    grabando = true
                 },
-                enabled =! grabando
+                enabled = !grabando
             ) {
                 Text("Iniciar grabación")
             }
+
             Button(
                 onClick = {
                     grabador.detener()
-                    grabando=false
-                    viewModel.guardar(
-                        inicio = horaInicio,
-                        fin = horaActual(),
-                        rutaAudio = ultimaRuta
-                    )
+                    grabando = false
+                    horaFin = horaActual()
+                    mostrarDialogo = true
                 },
                 enabled = grabando
-            ){
+            ) {
                 Text("Detener grabación")
             }
         }
@@ -86,8 +85,28 @@ fun MainScreen(
         Spacer(Modifier.height(32.dp))
 
         val mensaje = if (grabando) "Grabando..." else "En reposo"
-        Text(text = mensaje)
+        Text(text = mensaje, style = MaterialTheme.typography.bodyLarge)
 
         ListaRegistros(registros, onRegistroClick = onRegistroClick)
+    }
+
+    if (mostrarDialogo) {
+        DialogoValoracion(
+            inicio = horaInicio,
+            fin = horaFin,
+            onGuardar = { calidad, despierto ->
+                viewModel.guardar(
+                    inicio = horaInicio,
+                    fin = horaFin,
+                    rutaAudio = ultimaRuta,
+                    calidadPercibida = calidad,
+                    minutosDespierto = despierto
+                )
+                mostrarDialogo = false
+            },
+            onCancelar = {
+                mostrarDialogo = false
+            }
+        )
     }
 }

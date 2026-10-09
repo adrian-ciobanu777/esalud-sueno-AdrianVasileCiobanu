@@ -35,33 +35,31 @@ fun DetailScreen(
 
         Spacer(Modifier.height(16.dp))
 
-        // EJERCICIO 6
-        // Si os atascáis: pistas graduadas en el guion, parte 5.
-        //
-        // Mostrad aquí, con elementos Text, los datos guardados del registro:
-        //   - el horario de la noche, con el formato "23:30 - 07:15"
-        //   - el tiempo en cama, usando formatearMinutos(tiempoEnCama)
-        //   - los minutos que estuvo despierto
-        //   - la calidad percibida, de 1 a 5
-        //   - si rutaAudio es null, un aviso de que la grabación fue simulada
+        // EJERCICIO 6 — Datos del registro
+        Text("${registro.inicio} - ${registro.fin}")
+        Text("Tiempo en cama: ${formatearMinutos(tiempoEnCama)}")
+        Text("Tiempo despierto: ${registro.minutosDespierto} min")
+        Text("Calidad percibida: ${registro.calidadPercibida ?: "sin valorar"} / 5")
+        if (registro.rutaAudio == null) {
+            Text("(grabación simulada)")
+        }
 
         Spacer(Modifier.height(16.dp))
         HorizontalDivider()
         Spacer(Modifier.height(16.dp))
 
-        // EJERCICIO 7
-        // Si os atascáis: pistas graduadas en el guion, parte 5.
-        //
-        // Calculad y mostrad la eficiencia del sueño.
-        //
-        //   tiempo dormido = tiempo en cama - minutos despierto
-        //
-        // Usad la función eficiencia() que escribisteis en la sesión 1, y
-        // formatearPorcentaje() para mostrar el resultado.
-        //
-        // Añadid debajo un texto que avise si está por debajo del 85 %, el
-        // umbral orientativo por debajo del cual se considera que puede haber
-        // un problema de sueño.
+        // EJERCICIO 7 — Eficiencia del sueño
+        val tiempoDormido = tiempoEnCama - registro.minutosDespierto
+        val porcentaje = eficiencia(
+            minutosDormido = tiempoDormido,
+            minutosEnCama = tiempoEnCama
+        )
+
+        Text("Eficiencia del sueño: ${formatearPorcentaje(porcentaje)}")
+
+        if (porcentaje < 85) {
+            Text("Por debajo del 85 %, el umbral orientativo de referencia.")
+        }
 
         Spacer(Modifier.height(32.dp))
 
