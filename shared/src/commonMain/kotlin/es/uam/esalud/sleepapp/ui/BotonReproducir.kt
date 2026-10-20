@@ -35,5 +35,18 @@ fun BotonReproducir(
         //     reproductor.reproducir(ruta, alTerminar = { reproduciendo = false })
         // Su texto es "Detener reproducción" o "Reproducir grabación" según
         // el valor de reproduciendo.
+        Button(
+            onClick = {
+                if (reproduciendo) {
+                    reproductor.detener()
+                    reproduciendo = false
+                } else {
+                    reproduciendo = true
+                    reproductor.reproducir(ruta, alTerminar = { reproduciendo = false })
+                }
+            }
+        ) {
+            Text(if (reproduciendo) "Detener reproducción" else "Reproducir grabación")
+        }
     }
 }

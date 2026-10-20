@@ -18,6 +18,9 @@ import es.uam.esalud.sleepapp.auth.ServicioAuth
 import es.uam.esalud.sleepapp.auth.SesionViewModel
 import es.uam.esalud.sleepapp.datos.RepositorioSueno
 import org.jetbrains.compose.resources.painterResource
+import sleepapp.shared.generated.resources.Res
+import sleepapp.shared.generated.resources.fondo
+
 // EJERCICIO 7: aquí irán las importaciones de Res y de fondo. Dependen del
 // nombre de vuestro proyecto; ver el guion, parte 6.
 
@@ -57,6 +60,14 @@ fun App(
             // Añadid aquí un Image que muestre Res.drawable.fondo ocupando
             // toda la pantalla, recortado para llenarla (ContentScale.Crop)
             // y semitransparente (alpha = 0.25f) para que el texto se lea.
+            Image(
+                painter = painterResource(Res.drawable.fondo),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                alpha = 0.25f,
+                modifier = Modifier.fillMaxSize()
+            )
+
 
             // Transparente para que se vea la imagen que hay debajo.
             Surface(

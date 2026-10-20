@@ -17,7 +17,8 @@ import es.uam.esalud.sleepapp.datos.RepositorioJson
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
-        title = "Registro de sueño"
+        title = "Registro de sueño",
+        icon = iconoApp()
     ) {
         App(
             grabador = GrabadorSimulado(),

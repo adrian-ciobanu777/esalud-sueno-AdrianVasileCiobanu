@@ -38,6 +38,9 @@ class SuenoViewModel(
             //
             // Ahora se devuelve la lista entera. Sustituid la línea siguiente
             // por una que devuelva solo los registros cuyo usuarioId sea uid.
+            lista.filter { registro -> registro.usuarioId == uid }
+
+
             lista
         }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 

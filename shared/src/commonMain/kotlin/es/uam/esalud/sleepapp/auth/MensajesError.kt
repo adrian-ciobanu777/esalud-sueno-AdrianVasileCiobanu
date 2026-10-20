@@ -24,6 +24,9 @@ fun traducirError(codigo: String): String = when (codigo) {
     //   EMAIL_EXISTS   → ya existe una cuenta con ese correo
     //   WEAK_PASSWORD  → la contraseña debe tener al menos 6 caracteres
     //   INVALID_EMAIL  → el correo electrónico no es válido
+    "EMAIL_EXISTS" -> "Ya existe una cuenta con ese correo."
+    "WEAK_PASSWORD" -> "La contraseña debe tener al menos 6 caracteres."
+    "INVALID_EMAIL" -> "El correo electrónico no es válido."
 
     else ->
         "Error inesperado: $codigo"

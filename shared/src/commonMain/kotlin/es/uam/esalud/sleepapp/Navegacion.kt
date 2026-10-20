@@ -78,6 +78,10 @@ fun NavegacionApp(
                     // Navegad a RutaPrincipal eliminando RutaLogin del
                     // historial. El cierre de sesión, más abajo, hace lo mismo
                     // en sentido contrario: usadlo de modelo.
+                    navController.navigate(RutaPrincipal) {
+                        popUpTo(RutaLogin) { inclusive = true }
+                    }
+
                 }
             }
 

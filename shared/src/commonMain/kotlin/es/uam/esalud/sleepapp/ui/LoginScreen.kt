@@ -68,6 +68,17 @@ fun LoginScreen(sesion: SesionViewModel) {
         //     se vean puntos en lugar de las letras
         //   - el tipo de teclado es KeyboardType.Password
 
+        OutlinedTextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text("Contraseña") },
+            singleLine = true,
+            visualTransformation = PasswordVisualTransformation(), // <- Nuevo
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password), // <- Nuevo
+            modifier = Modifier.fillMaxWidth()
+        )
+
+
         Spacer(Modifier.height(16.dp))
 
         mensajeError?.let { texto ->
