@@ -13,14 +13,16 @@ import es.uam.esalud.sleepapp.logica.Hora
 import es.uam.esalud.sleepapp.nombrePlataforma
 
 /**
- * SESIÓN 3 - PANTALLA PRINCIPAL
+ * SESIÓN 4 - PANTALLA PRINCIPAL
  *
- * Añadido: horaFin, mostrarDialogo, y el diálogo de valoración al detener.
+ * Añadido: correoUsuario, onCerrarSession (sesión 4) y el diálogo (sesión 3).
  */
 @Composable
 fun MainScreen(
     grabador: GrabadorAudio,
     viewModel: SuenoViewModel,
+    correoUsuario: String,
+    onCerrarSession: () -> Unit,
     onRegistroClick: (Long) -> Unit
 ) {
 
@@ -37,6 +39,23 @@ fun MainScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
+
+        // Fila superior con el correo y el botón de cerrar sesión
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = correoUsuario,
+                style = MaterialTheme.typography.bodySmall
+            )
+            TextButton(onClick = onCerrarSession) {
+                Text("Cerrar sesión")
+            }
+        }
+
+        Spacer(Modifier.height(16.dp))
 
         Text(
             text = "Registro de sueño",

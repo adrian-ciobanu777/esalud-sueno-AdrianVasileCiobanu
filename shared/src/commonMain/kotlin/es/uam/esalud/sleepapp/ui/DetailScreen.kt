@@ -6,6 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import es.uam.esalud.sleepapp.audio.ReproductorAudio
 import es.uam.esalud.sleepapp.datos.SleepRecord
 import es.uam.esalud.sleepapp.logica.duracionEnMinutos
 import es.uam.esalud.sleepapp.logica.eficiencia
@@ -13,12 +14,12 @@ import es.uam.esalud.sleepapp.logica.eficiencia
 /**
  * Pantalla de detalle de un registro.
  *
- * Solo muestra: los datos se introdujeron en el diálogo que aparece al
- * detener la grabación, y aquí se consultan.
+ * Añadido en la sesión 4: parámetro reproductor y el botón para escuchar.
  */
 @Composable
 fun DetailScreen(
     registro: SleepRecord,
+    reproductor: ReproductorAudio,
     onVolver: () -> Unit
 ) {
     val tiempoEnCama = duracionEnMinutos(registro.inicio, registro.fin)
@@ -35,7 +36,7 @@ fun DetailScreen(
 
         Spacer(Modifier.height(16.dp))
 
-        // EJERCICIO 6 — Datos del registro
+        // Datos del registro (Sesión 3)
         Text("${registro.inicio} - ${registro.fin}")
         Text("Tiempo en cama: ${formatearMinutos(tiempoEnCama)}")
         Text("Tiempo despierto: ${registro.minutosDespierto} min")
@@ -48,7 +49,7 @@ fun DetailScreen(
         HorizontalDivider()
         Spacer(Modifier.height(16.dp))
 
-        // EJERCICIO 7 — Eficiencia del sueño
+        // Eficiencia (Sesión 3)
         val tiempoDormido = tiempoEnCama - registro.minutosDespierto
         val porcentaje = eficiencia(
             minutosDormido = tiempoDormido,
@@ -62,6 +63,11 @@ fun DetailScreen(
         }
 
         Spacer(Modifier.height(32.dp))
+
+        // Botón de reproducir (Sesión 4)
+        BotonReproducir(ruta = registro.rutaAudio, reproductor = reproductor)
+
+        Spacer(Modifier.height(8.dp))
 
         OutlinedButton(onClick = onVolver) {
             Text("Volver")

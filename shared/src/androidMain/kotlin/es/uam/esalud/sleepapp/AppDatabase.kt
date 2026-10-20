@@ -9,13 +9,14 @@ import es.uam.esalud.sleepapp.datos.RepositorioSueno
 /**
  * La base de datos.
  *
- * `version = 2`: la entidad ha cambiado respecto a la sesión 2 (columna nueva),
- * así que sube el número de versión del esquema. Como crearRepositorioRoom() usa
+ * `version = 3`: la entidad ha cambiado en la sesión 3 (minutosDespierto) y
+ * otra vez en la sesión 4 (usuarioId). Cada cambio de la tabla sube el número
+ * de versión del esquema. Como crearRepositorioRoom() usa
  * fallbackToDestructiveMigration(), la base de datos se borra y se recrea
  * vacía. En una aplicación real habría que escribir una migración para no
  * perder los datos de los pacientes.
  */
-@Database(entities = [SleepRecordEntity::class], version = 2)
+@Database(entities = [SleepRecordEntity::class], version = 3)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun sleepDao(): SleepDao
 }
